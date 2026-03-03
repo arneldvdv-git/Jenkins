@@ -19,7 +19,7 @@ pipeline {
         }
         stage('Approved') {
             steps {
-                echp 'Pipeline approved!'
+                echo 'Pipeline approved!'
             }
         }
     }
