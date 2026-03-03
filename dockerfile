@@ -1,5 +1,5 @@
 # Set the base image with the specified Node.js version
-ARG NODE_VERSION=22.4.1
+ARG NODE_VERSION=24.14.0
 FROM node:${NODE_VERSION}-alpine
 
 # Set the environment variable for Node.js to run in production mode
@@ -11,6 +11,7 @@ WORKDIR /usr/src/app
 # Install dependencies by leveraging Docker's caching
 # Use bind mounts to package.json and package-lock.json for faster builds
 RUN --mount=type=bind,source=package.json,target=package.json \
+    --mount=type=bind,source=package-lock.json,target=package-lock.json \
     --mount=type=cache,target=/root/.npm \
     npm ci --omit=dev
 
