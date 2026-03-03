@@ -17,5 +17,10 @@ pipeline {
                 echo 'Tests uitvoeren....'
             }
         }
+        stage('Approved') {
+            steps {
+                echp 'Pipeline approved!'
+            }
+        }
     }
 }
