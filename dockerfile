@@ -3,7 +3,7 @@ ARG NODE_VERSION=22.4.1
 FROM node:${NODE_VERSION}-alpine
 
 # Set the environment variable for Node.js to run in production mode
-ENV NODE_ENV production
+ENV NODE_ENV=production
 
 # Create and set the working directory inside the container
 WORKDIR /usr/src/app
