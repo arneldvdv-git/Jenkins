@@ -1,25 +1,46 @@
 pipeline {
     agent any
 
-    stages { 
+    environment {
+        IMAGE_NAME = "hello-world"
+        CONTAINER_NAME = "myapp"
+    }
+
+    stages {
+
         stage('Checkout') {
             steps {
                 checkout scm
             }
         }
-        stage('Build'){
+
+        stage('Build Docker Image') {
             steps {
-                echo 'Bezig met bouwen....'
+                script {
+                    docker.build("${IMAGE_NAME}:latest")
+                }
             }
         }
-        stage('Test') {
+
+        stage('Stop & Remove Old Container') {
             steps {
-                echo 'Tests uitvoeren....'
+                script {
+                    sh """
+                    docker stop ${CONTAINER_NAME} || true
+                    docker rm ${CONTAINER_NAME} || true
+                    """
+                }
             }
         }
-        stage('Approved') {
+
+        stage('Run New Container') {
             steps {
-                echo 'Pipeline approved!'
+                sh """
+                docker run -d \
+                  --name ${CONTAINER_NAME} \
+                  -p 8081:80 \
+                  ${IMAGE_NAME}:latest
+                """
             }
         }
     }
