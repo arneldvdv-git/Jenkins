@@ -22,26 +22,24 @@ pipeline {
             }
         }
 
-        stage('Stop & Remove Old Container') {
-            steps {
-                script {
-                    sh """
-                    docker stop ${CONTAINER_NAME} || true
-                    docker rm ${CONTAINER_NAME} || true
-                    """
-                }
-            }
-        }
-
         stage('Run New Container') {
             steps {
                 sh """
-                docker run -d \
+                docker run --rm \
                   --name ${CONTAINER_NAME} \
                   -p 8081:80 \
                   ${IMAGE_NAME}:latest
                 """
             }
         }
+
+         stage('Push') {
+            steps {
+                script {
+                    docker.withRegistry('https://hub.docker.com/repository/docker/arneldvdv/test') {
+                        dockerImage.push()
+                    }
+                }
+            }
     }
 }
