@@ -44,7 +44,7 @@ pipeline {
             }
         }
 
-         stage('Push') {
+        stage('Push') {
             steps {
                 script {
                     docker.withRegistry('https://hub.docker.com/repository/docker/arneldvdv/test') {
