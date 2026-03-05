@@ -43,16 +43,15 @@ pipeline {
                 """
             }
         }
-
-        stage('Push to docker registry') {
+        stage('push to hub'){
             steps {
-                script {
-                    docker.withRegistry('https://hub.docker.com/repository/docker/arneldvdv/test', 'f190aaa0-d97d-4534-be17-5f806f4b6930') {
-                        dockerImage.push()
-                    }
+                withCredentials([usernamePassword(credentialsId: 'f190aaa0-d97d-4534-be17-5f806f4b6930', passwordVariable: 'PSWD', usernameVariable: 'LOGIN')]) {
+                    script {
+                        sh 'echo ${PSWD} | docker login -u ${LOGIN} --password-stdin'
+                        sh 'docker push ${DOCKER_REPO}:${IMG_NAME}'
                 }
-
-            }
-        }
+             }
+          }
+        } 
     }
 }
