@@ -3,7 +3,8 @@ pipeline {
 
     environment {
         IMAGE_NAME = "hello-world"
-        CONTAINER_NAME = "myapp"
+        CONTAINER_NAME = "Hello-world-test"
+        DOCKER_REPO = 'arneldvdv/test'
     }
 
     stages {
@@ -48,7 +49,7 @@ pipeline {
                 withCredentials([usernamePassword(credentialsId: 'f190aaa0-d97d-4534-be17-5f806f4b6930', passwordVariable: 'PSWD', usernameVariable: 'LOGIN')]) {
                     script {
                         sh 'echo ${PSWD} | docker login -u ${LOGIN} --password-stdin'
-                        sh 'docker push ${DOCKER_REPO}:${IMG_NAME}'
+                        sh 'docker push ${DOCKER_REPO}:${IMAGE_NAME}'
                 }
              }
           }
