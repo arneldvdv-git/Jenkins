@@ -16,7 +16,7 @@ COPY package.json ./
 
 # Install dependencies by leveraging Docker's caching
 # Use bind mounts to package.json and package-lock.json for faster builds
-RUN npm install && npm cache clean --force
+RUN npm install express && npm cache clean --force
 
 # Copy all the application source files into the container
 COPY . .
