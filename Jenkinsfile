@@ -19,6 +19,7 @@ pipeline {
             steps {
                 script {
                     docker.build("${IMAGE_NAME}:latest")
+                    sh 'docker tag ${IMAGE_NAME} ${DOCKER_REPO}:${IMAGE_NAME}'
                 }
             }
         }
