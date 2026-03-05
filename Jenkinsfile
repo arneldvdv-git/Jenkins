@@ -44,10 +44,9 @@ pipeline {
             }
         }
 
-        stage('Push') {
+        stage('Push to docker registry') {
             steps {
-                script {
-                    docker.withRegistry('https://hub.docker.com/repository/docker/arneldvdv/test') {
+                    docker.withRegistry('https://hub.docker.com/repository/docker/arneldvdv/test', 'f190aaa0-d97d-4534-be17-5f806f4b6930') {
                         dockerImage.push()
                     }
                 }
